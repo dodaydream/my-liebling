@@ -27,7 +27,7 @@ into the {body} of the default.hbs template --}}
     {{!-- Inject styles of the hero image to make it responsive --}}
     {{> hero background=feature_image}}
     </section>
-    {{#if feature_image}}
+{{#if feature_image}}
       {{#if feature_image_caption}}
         <div class="l-wrapper in-caption">
           <p class="m-small-text align-center">
@@ -75,6 +75,32 @@ into the {body} of the default.hbs template --}}
                 </div>
               </div>
               {{content}}
+        <style>
+        .likecoin-like-button {
+  max-width: 485px;
+  max-height: 240px;
+  margin: 0 auto;
+}
+.likecoin-like-button > div {
+  position: relative;
+  padding-top: 49.48454%;
+}
+.likecoin-like-button > div iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
+
+        <section class="m-likecoin">
+<div class="likecoin-embed likecoin-like-button" style="text-align:center">
+    <div>
+        <iframe scrolling="no" frameborder="0" src="https://button.like.co/in/embed/dodaydream/button/?referrer={{ url absolute="true"}}" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation allow-storage-access-by-user-activation"></iframe>
+    </div>
+</div>        
+        </section>
               {{!-- List of tags  --}}
               {{#if tags}}
                 <section class="m-tags in-post">
@@ -88,27 +114,60 @@ into the {body} of the default.hbs template --}}
                   </ul>
                 </section>
               {{/if}}
+
+              <div id="graphcomment"></div>
+<script type="text/javascript">
+
+  /* - - - CONFIGURATION VARIABLES - - - */
+
+  var __semio__params = {
+    graphcommentId: "daydreams-reverie", // make sure the id is yours
+
+    behaviour: {
+      // HIGHLY RECOMMENDED
+      //  uid: "...", // uniq identifer for the comments thread on your page (ex: your page id)
+    },
+
+    // configure your variables here
+
+  }
+
+  /* - - - DON'T EDIT BELOW THIS LINE - - - */
+
+  function __semio__onload() {
+    __semio__gc_graphlogin(__semio__params)
+  }
+
+
+  (function() {
+    var gc = document.createElement('script'); gc.type = 'text/javascript'; gc.async = true;
+    gc.onload = __semio__onload; gc.defer = true; gc.src = 'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
+  })();
+  
+
+</script>
             </div>
           </div>
         </div>
         {{!-- Email subscribe form at the bottom of the page --}}
-        {{#if @site.members_enabled}}
-          <section class="m-subscribe-section js-newsletter">
-            <div class="l-wrapper in-post">
-              <div class="m-subscribe-section__content">
-                <div class="m-subscribe-section__text">
-                  <h4 class="m-subscribe-section__title">{{t "Subscribe to our newsletter"}}</h4>
-                  <p class="m-subscribe-section__description">
-                    {{t "Get the latest posts delivered right to your inbox."}}
-                  </p>
-                </div>
-                <div class="m-subscribe-section__form">
-                  {{> "newsletter-form"}}
-                </div>
+{{#if @site.members_enabled}}
+        <section class="m-subscribe-section js-newsletter">
+          <div class="l-wrapper in-post">
+            <div class="m-subscribe-section__content">
+              <div class="m-subscribe-section__text">
+                <h4 class="m-subscribe-section__title">{{t "Subscribe to our newsletter"}}</h4>
+                <p class="m-subscribe-section__description">
+                  {{t "Get the latest posts delivered right to your inbox."}}
+                </p>
+              </div>
+              <div class="m-subscribe-section__form">
+                {{> "newsletter-form"}}
               </div>
             </div>
-          </section>
-        {{/if}}
+          </div>
+        </section>
+{{/if}}
         <section class="m-author">
           <div class="m-author__content">
             <div class="m-author__picture">
@@ -158,7 +217,7 @@ into the {body} of the default.hbs template --}}
             </div>
           </div>
         </section>
-        {{!-- Native comments --}}
+{{!-- Native comments --}}
         {{#if comments}}
           <div class="m-comments">
             <div class="l-wrapper in-comments js-native-comments">
@@ -178,29 +237,29 @@ into the {body} of the default.hbs template --}}
       {{!-- Related posts --}}
       {{#if post.tags.length}}
         {{#get "posts" limit="3" filter="tags:[{{post.tags}}]+id:-{{post.id}}" include="tags,authors" order="published_at desc" as |related|}}
-          {{#if related}}
-            <section class="m-recommended">
-              <div class="l-wrapper in-recommended">
-                <h3 class="m-section-title in-recommended">{{t "Recommended for you"}}</h3>
-                <div class="m-recommended-articles">
-                  <div class="m-recommended-slider swiper js-recommended-slider">
-                    <div class="swiper-wrapper">
+{{#if related}}
+          <section class="m-recommended">
+            <div class="l-wrapper in-recommended">
+              <h3 class="m-section-title in-recommended">{{t "Recommended for you"}}</h3>
+              <div class="m-recommended-articles">
+                <div class="m-recommended-slider swiper js-recommended-slider">
+                  <div class="swiper-wrapper">
                       {{!-- The tag below iterates over all the related posts --}}
                       {{> "loop"}}
                     </div>
-                    <button class="m-icon-button filled in-recommended-articles swiper-button-prev" aria-label="{{t "Previous"}}">
+                  <button class="m-icon-button filled in-recommended-articles swiper-button-prev" aria-label="{{t "Previous"}}">
                       <span class="icon-arrow-left" aria-hidden="true"></span>
                     </button>
                     <button class="m-icon-button filled in-recommended-articles swiper-button-next" aria-label="{{t "Next"}}">
                       <span class="icon-arrow-right" aria-hidden="true"></span>
                     </button>
-                  </div>
-                </div>
+                                  </div>
               </div>
-            </section>
-          {{/if}}
+            </div>
+          </section>
+{{/if}}
         {{/get}}
-      {{/if}}
+            {{/if}}
     </div>
   </article>
 </main>
