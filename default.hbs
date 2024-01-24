@@ -120,7 +120,17 @@
     {{!-- This script sets the correct theme mode (light or dark) --}}
     <script>
       if (typeof Storage !== 'undefined') {
-        const currentSavedTheme = localStorage.getItem('theme')
+        let currentSavedTheme = localStorage.getItem('theme')
+
+        if (!currentSavedTheme) {
+          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            currentSavedTheme = 'dark'
+          } else {
+            currentSavedTheme = 'light'
+          }
+
+          localStorage.setItem('theme', currentSavedTheme)
+        }
 
         if (currentSavedTheme && currentSavedTheme === 'dark') {
           document.documentElement.setAttribute('data-theme', 'dark')
